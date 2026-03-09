@@ -1,7 +1,7 @@
 # gpu-validation
 
-## Running from a crc hypervisor node
-Once the RHOSO + RHEL AI setup is complete, do the following:
+## Running manually
+Once the RHOSO setup is complete, do the following:
 
 1. Clone the repository
     ```
