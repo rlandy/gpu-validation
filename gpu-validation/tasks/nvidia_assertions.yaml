@@ -5,3 +5,9 @@
     fail_msg: No NVIDIA GPUs found in nvidia-smi command!
   when:
     - found_nvidia | default(false)
+
+- name: "TEST[nvidia mig] Check MIG mode slice is Enabled on the VM"
+  ansible.builtin.assert:
+    that: "'Enabled' in nvidia_smi_mig_mode_output.stdout"
+    fail_msg: nvidia-smi did not return any MIG enabled device on the VM.
+  when: gpu_validation_mode == "mig"
