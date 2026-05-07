@@ -36,7 +36,7 @@
   changed_when: false
 
 - name: Run lsmod to get A30 MIG NVIDIA modules status
-  ansible.builtin.command: lsmod | grep nvidia
+  ansible.builtin.command: lsmod
   register: lsmod_mig_mode_output
   when:
     - gpu_validation_mode == "mig"
