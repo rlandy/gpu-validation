@@ -24,7 +24,8 @@
       GPU Temperature: {{ nvidia_smi_output.stdout.split(',')[3].strip() }} C
   when:
     - found_nvidia | default(false)
-    - (not nvidia_smi_output.failed) or (not nvidia_smi_output is undefined)
+    - not found_a30 | default(false)
+    - not nvidia_smi_output.failed
 
 - name: Run nvidia smi to get MIG device status
   ansible.builtin.command: nvidia-smi --query-gpu uuid,pci.device_id,mig.mode.current --format=noheader
