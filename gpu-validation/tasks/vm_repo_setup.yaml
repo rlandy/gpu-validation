@@ -1,0 +1,6 @@
+---
+- name: Run repo-setup for RHEL VMs
+  ansible.builtin.include_role:
+    name: cifmw.general.repo_setup
+    tasks_from: rhos_release
+  when: ansible_distribution == 'RedHat'

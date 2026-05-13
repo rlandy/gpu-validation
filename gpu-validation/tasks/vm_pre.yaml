@@ -17,3 +17,6 @@
 
     - name: VM Deploy
       ansible.builtin.import_tasks: vm_deploy.yaml
+
+    - name: Set Up repos
+      ansible.builtin.import_tasks: vm_repo_setup.yaml
