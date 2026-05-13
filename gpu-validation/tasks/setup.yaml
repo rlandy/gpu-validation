@@ -6,6 +6,12 @@
   when: gpu_validation_dns_server != ""
   changed_when: true
 
+- name: Run repo-setup for RHEL VMs
+  ansible.builtin.include_role:
+    name: cifmw.general.repo_setup
+    tasks_from: rhos_release
+  when: ansible_distribution == 'RedHat'
+
 - name: Install pciutils package
   ansible.builtin.dnf:
     use_backend: dnf4
