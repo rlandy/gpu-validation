@@ -20,6 +20,7 @@
       ansible.builtin.dnf:
         use_backend: dnf4
         name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+        disable_gpg_check: true
         state: present
 
     - name: Install DKMS (Not supported)
