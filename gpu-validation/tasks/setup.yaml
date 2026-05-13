@@ -6,11 +6,30 @@
   when: gpu_validation_dns_server != ""
   changed_when: true
 
-- name: Run repo-setup for RHEL VMs
-  ansible.builtin.include_role:
-    name: cifmw.general.repo_setup
-    tasks_from: rhos_release
-  when: ansible_distribution == 'RedHat'
+- name: Install needed driver dependency packages for RHEL
+  when:
+    - ansible_distribution == "RedHat"
+    - gpu_validation_mode == "mig"
+  block:
+    - name: Run repo-setup for RHEL VMs
+      ansible.builtin.include_role:
+        name: cifmw.general.repo_setup
+        tasks_from: rhos_release
+
+    - name: Install EPEL if needed for driver
+      ansible.builtin.dnf:
+        use_backend: dnf4
+        name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+        state: present
+
+    - name: Install DKMS (Not supported)
+      ansible.builtin.dnf:
+       use_backend: dnf4
+       name:
+         - dkms
+         - kernel-devel
+         - kernel-headers
+       state: present
 
 - name: Install pciutils package
   ansible.builtin.dnf:
