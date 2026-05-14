@@ -7,6 +7,11 @@
   ansible.builtin.include_role:
     name: osp.edpm.edpm_accel_drivers
 
+- name: (Temp) Install NVIDIA drivers with custome URL rpm
+  ansible.builtin.include_role:
+    name: osp.edpm.edpm_accel_drivers
+    tasks_from: nvidia_repos.yml
+
 - name: Reboot the VM to find the installed drivers
   ansible.builtin.reboot:
     reboot_timeout: 600
