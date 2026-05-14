@@ -16,6 +16,12 @@
     gpgcheck: true
     gpgkey: "{{ edpm_accel_drivers_nvidia_repo_gpgkey }}"
 
+- name: Install nvidia-container-toolkit
+  ansible.builtin.dnf:
+    use_backend: dnf4
+    name: nvidia-container-toolkit
+    state: present
+
 - name: Reboot the VM to find the installed drivers
   ansible.builtin.reboot:
     reboot_timeout: 600
