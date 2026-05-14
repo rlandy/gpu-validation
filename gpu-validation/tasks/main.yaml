@@ -17,6 +17,7 @@
     gpgkey: "{{ edpm_accel_drivers_nvidia_repo_gpgkey }}"
 
 - name: Install nvidia-container-toolkit
+  become: true
   ansible.builtin.dnf:
     use_backend: dnf4
     name: nvidia-container-toolkit
