@@ -7,10 +7,14 @@
   ansible.builtin.include_role:
     name: osp.edpm.edpm_accel_drivers
 
-- name: (Temp) Install NVIDIA drivers with custome URL rpm
-  ansible.builtin.include_role:
-    name: osp.edpm.edpm_accel_drivers
-    tasks_from: nvidia_repos.yml
+- name: (Temp) Install NVIDIA drivers with custom URL rpm
+  become: true
+  ansible.builtin.yum_repository:
+    name: nvidia-rhel
+    description: nvidia drivers for rhel
+    baseurl: "{{ edpm_accel_drivers_nvidia_repo_url }}/$basearch/"
+    gpgcheck: true
+    gpgkey: "{{ edpm_accel_drivers_nvidia_repo_gpgkey }}"
 
 - name: Reboot the VM to find the installed drivers
   ansible.builtin.reboot:
