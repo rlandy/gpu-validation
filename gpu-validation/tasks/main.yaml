@@ -23,6 +23,14 @@
     name: nvidia-container-toolkit
     state: present
 
+- name: Reboot the VM to find the installed drivers
+  become: true
+  ansible.builtin.reboot:
+    reboot_timeout: 600
+  when:
+    - ansible_distribution == "RedHat"
+    - gpu_validation_mode == "mig"
+
 - name: Check if CDI configfile exists
   become: true
   ansible.builtin.stat:
@@ -45,10 +53,6 @@
       ansible.builtin.command: nvidia-ctk runtime configure --runtime=containerd
       changed_when: true
 
-    - name: Clear old configuration spec
-      ansible.builtin.command: rm /var/run/cdi/nvidia.yaml
-      changed_when: true
-
     - name: Generate NVIDIA CDI configuration
       ansible.builtin.command: nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml
       changed_when: true
@@ -63,14 +67,6 @@
 - name: Refresh package facts after driver installation
   ansible.builtin.package_facts:
     manager: rpm
-
-- name: Reboot the VM to find the installed drivers
-  ansible.builtin.reboot:
-    reboot_timeout: 600
-  become: true
-  when:
-    - ansible_distribution == "RedHat"
-    - gpu_validation_mode == "mig"
 
 - name: Check GPUs
   ansible.builtin.import_tasks: gpus.yaml
