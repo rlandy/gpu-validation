@@ -25,12 +25,14 @@
     state: present
 
 - name: Check if CDI configfile exists
+  become: true
   ansible.builtin.stat:
     path: /etc/cdi/nvidia.yaml
   register: nvidia_driver_cdi_config_file
 
 - name: Configure NVIDIA container runtime
   when: not nvidia_driver_cdi_config_file.stat.exists
+  become: true
   block:
     - name: Ensure CDI directory exists
       ansible.builtin.file:
