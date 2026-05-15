@@ -15,7 +15,6 @@
     baseurl: "{{ edpm_accel_drivers_nvidia_repo_url }}/$basearch/"
     gpgcheck: true
     gpgkey: "{{ edpm_accel_drivers_nvidia_repo_gpgkey }}"
-    exclude: nvidia-kmod-common
 
 - name: Install nvidia-container-toolkit
   become: true
