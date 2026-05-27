@@ -7,6 +7,9 @@
   ansible.builtin.include_role:
     name: osp.edpm.edpm_accel_drivers
 
+- name: Reboot if system updates require it
+  ansible.builtin.import_tasks: reboot_if_needed.yaml
+
 - name: Check GPUs
   ansible.builtin.import_tasks: gpus.yaml
 - name: GPUs Assertions  # noqa: ignore-errors
