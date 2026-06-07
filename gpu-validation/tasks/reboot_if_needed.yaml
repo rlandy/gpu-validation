@@ -1,0 +1,25 @@
+---
+- name: Make sure yum-utils is installed
+  become: true
+  ansible.builtin.dnf:
+    name: yum-utils
+    state: present
+
+- name: Check if reboot is required with needs-restarting
+  become: true
+  ansible.builtin.command: needs-restarting -r
+  register: _gpu_validation_needs_restarting
+  changed_when: false
+  failed_when: _gpu_validation_needs_restarting.rc >= 2
+
+- name: Print return information from needs-restarting
+  ansible.builtin.debug:
+    var: _gpu_validation_needs_restarting.stdout
+
+- name: Reboot to apply system updates
+  become: true
+  ansible.builtin.reboot:
+    msg: "Rebooting to apply kernel and driver updates"
+    reboot_timeout: "{{ gpu_validation_reboot_timeout }}"
+    post_reboot_delay: "{{ gpu_validation_reboot_post_delay }}"
+  when: _gpu_validation_needs_restarting.rc == 1
