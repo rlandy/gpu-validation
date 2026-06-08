@@ -13,6 +13,7 @@
     security_groups:
       - "{{ gpu_validation_security_group }}"
     ca_cert: "{{ gpu_validation_ca_cert_path }}"
+    timeout: "{{ gpu_validation_server_timeout }}"
 
 - name: Poll for SSH to be available on {{ gpu_validation_vm_name }}
   ansible.builtin.command: |
