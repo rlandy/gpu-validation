@@ -5,4 +5,3 @@ collections:
   - name: community.general
     version: ">=10.0.0"
   - name: git+https://github.com/openstack-k8s-operators/edpm-ansible.git
-  - name: git+https://github.com/openstack-k8s-operators/ci-framework.git

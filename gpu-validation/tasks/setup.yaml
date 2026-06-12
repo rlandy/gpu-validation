@@ -11,10 +11,10 @@
     - ansible_distribution == "RedHat"
     - gpu_validation_mode == "mig"
   block:
-    - name: Run repo-setup for RHEL VMs
+    - name: Execute bootstrap command - RHEL repo setup
       ansible.builtin.include_role:
-        name: cifmw.general.repo_setup
-        tasks_from: rhos_release
+        name: osp.edpm.edpm_bootstrap
+        tasks_from: bootstrap_command.yml
 
     - name: Add EPEL repository for DKMS (UNSUPPORTED)
       ansible.builtin.yum_repository:
